@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bí kíp làm</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f2f4f7;
+      font-family: Arial, sans-serif;
+      color: #222;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #e63946;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    button {
+      background: #e63946;
+      color: white;
+      border: none;
+      padding: 14px 25px;
+      border-radius: 8px;
+      font-size: 17px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #c92f3b;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .warning {
+      color: #d62828;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .video-box {
+      margin-top: 20px;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+    }
+
+    .success {
+      color: #e63946;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .countdown {
+      color: #555;
+      font-size: 18px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- BẢNG 1 -->
+    <div class="box" id="box1">
+      <h1>🔔 Bí kíp làm</h1>
+      <p>Muốn biết bí kíp thì ấn vào đây!</p>
+      <button onclick="showBox2()">Bắt đầu</button>
+    </div>
+
+    <!-- BẢNG 2 -->
+    <div class="box hidden" id="box2">
+      <h1>⚠️ Thông báo</h1>
+      <p class="warning">Bạn có bị bệnh tim không?</p>
+      <p>Hãy suy nghĩ thật kỹ trước khi tiếp tục nhé 😈</p>
+      <button onclick="showBox3()">Tôi không bị bệnh tim</button>
+    </div>
+
+    <!-- BẢNG 3 -->
+    <div class="box hidden" id="box3">
+      <h1>🎉 Chúc mừng!</h1>
+      <p>Hệ thống đã xác nhận bạn không bị bệnh tim!</p>
+      <p>Ấn vào nút bên dưới để nhận bí kíp.</p>
+
+      <button onclick="startPrank()">Ấn tới đây</button>
+
+      <p class="countdown hidden" id="countdown"></p>
+
+      <!-- VIDEO SẼ HIỆN Ở ĐÂY -->
+      <div class="video-box hidden" id="videoBox">
+
+
+        <video id="myVideo" controls>
+          <source src="huhu.mp4" type="video/mp4">
+          Trình duyệt không hỗ trợ phát video.
+        </video>
+
+        <p class="success">
+          🎉 Chúc mừng bạn đã bị lừa, hahahihi 🤣
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showBox2() {
+      document.getElementById("box1").classList.add("hidden");
+      document.getElementById("box2").classList.remove("hidden");
+    }
+
+    function showBox3() {
+      document.getElementById("box2").classList.add("hidden");
+      document.getElementById("box3").classList.remove("hidden");
+    }
+
+    function startPrank() {
+      const button = document.querySelector("#box3 button");
+      const countdown = document.getElementById("countdown");
+      const videoBox = document.getElementById("videoBox");
+      const video = document.getElementById("myVideo");
+
+      button.classList.add("hidden");
+      countdown.classList.remove("hidden");
+
+      let time = 8;
+      countdown.textContent = "Đang kiểm tra... " + time + " giây";
+
+      const timer = setInterval(() => {
+        time--;
+
+        if (time > 0) {
+          countdown.textContent = "Đang kiểm tra... " + time + " giây";
+        } else {
+          clearInterval(timer);
+
+          countdown.classList.add("hidden");
+          videoBox.classList.remove("hidden");
+
+          // Phát video ngay khi hết 8 giây
+          video.play().catch(() => {
+            // Nếu trình duyệt chặn tự phát, người xem có thể bấm Play.
+          });
+        }
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
